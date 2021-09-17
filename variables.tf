@@ -13,11 +13,11 @@ variable "environment" {
 variable "cost_center" {
   type        = "string"
   description = "The cost_center name for this project"
-  default     = "ifrs"
+  default     = "personal budget"
 }
 variable "app_name" {
   type        = "string"
-  description = "Application name of IFRS project"
+  description = "Application name of project"
   default     = "rd"
 }
 variable "location" {
@@ -103,7 +103,7 @@ variable "os_type" {
   type = "string"
   description = "The size of the vm"
 }
-}
+
 variable "username" {
   type = "string"
   description = "The root user name for the compute resource"

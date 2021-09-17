@@ -16,6 +16,7 @@ locals {
 resource "azurerm_resource_group" "rg" {
   name = "${var.environment}-${var.app_name}-rg"
   location = "${var.location}"
+  tags = "${local.common_tags}"
 }
 
 ##################################################
