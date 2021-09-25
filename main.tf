@@ -41,11 +41,24 @@ data "azurerm_subnet" "subnet" {
 }
 
 ##################################################
+# Azure PIP
+##################################################
+
+resource "azurerm_public_ip" "pip" {
+  name                = "${var.environment}-${var.app_name}-pip"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            =  var.location
+  allocation_method   = "Dynamic"
+  sku = "Basic"
+  tags =  local.common_tags 
+}
+
+##################################################
 # Azure NIC
 ##################################################
 
 resource "azurerm_network_interface" "avd_nic" {
-  name                ="${var.environment}-${var.app_name}-avd-name"
+  name                = "${var.environment}-${var.app_name}-avd-nic"
   location            =  var.location 
   resource_group_name =  azurerm_resource_group.rg.name 
   enable_ip_forwarding = false
@@ -53,6 +66,7 @@ resource "azurerm_network_interface" "avd_nic" {
       name =  var.ipconf_name 
       private_ip_address_allocation = "Dynamic"
       subnet_id =  data.azurerm_subnet.subnet.id 
+      public_ip_address_id = azurerm_public_ip.pip.id
      }
   tags =  local.common_tags 
 }
@@ -144,7 +158,7 @@ resource "azurerm_virtual_desktop_workspace_application_group_association" "ws_a
 ##################################################
 
 #@#@#@#@#@#@#@# (Optional) @#@#@#@#@#@#@#@#@#@#@#
-
+/* 
 resource "azurerm_shared_image_gallery" "img_gallery" {
   name                = "${var.environment}-${var.app_name}-image-gallery"
   resource_group_name =  azurerm_resource_group.rg.name 
@@ -166,7 +180,7 @@ resource "azurerm_shared_image" "image" {
     sku       =  var.sku 
   }
 
-}
+} */
 
 ##############################################
 # AZURE VIRTUAL DESKTOP
@@ -177,7 +191,7 @@ resource "azurerm_windows_virtual_machine" "avd_vm" {
   resource_group_name =  azurerm_resource_group.rg.name 
   location            =  var.location 
   network_interface_ids = [ azurerm_network_interface.avd_nic.id ]
-  size                =  var.os_size 
+  size                =  var.os_type 
   admin_username      =  var.username 
   admin_password      =  var.password 
   os_disk {
@@ -186,7 +200,13 @@ resource "azurerm_windows_virtual_machine" "avd_vm" {
     storage_account_type = "Standard_LRS"
   }
 
-  source_image_id =  azurerm_shared_image.image.id 
+  source_image_reference {
+    publisher = var.publisher
+    offer     = var.offer
+    sku       = var.sku
+    version   = "latest"
+  }
+  #source_image_id =  azurerm_shared_image.image.id 
 
   identity {
     type = "SystemAssigned"

@@ -73,10 +73,10 @@ variable "desktop_app_group_type" {
 }
 
 ### Share Image Gallery ###
-variable "sig_image_name" {
+/* variable "sig_image_name" {
   type        = string
   description = "Image definition name"
-}
+} */
 
 variable "publisher" {
   type        = string

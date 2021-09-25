@@ -4,22 +4,22 @@ environment          = "dev"
 
 # Network
 
-vnet_name = ""
-vnet_rg_name = ""
-subnet_name = ""
-ipconf_name = ""
+vnet_name = "dev-vnet"
+vnet_rg_name = "dev-vnet-rg"
+subnet_name = "dev-subnet"
+ipconf_name = "rd-config"
 
 # Image
 
-sig_image_name = ""
-os_type = "Standard_F2"
-publisher = "microsoftwindowsdesktop"
-offer = "office-365"
-sku = "20h2-evd-o365pp"
+#sig_image_name = ""
+#os_type = "Standard_F2"
+publisher = "MicrosoftWindowsServer"
+offer = "WindowsServer"
+sku = "2016-Datacenter"
 
 # VM details
 os_type = "Standard_F2"
-username = ""
+username = "prem"
 password = ""
 
 # AAD details
