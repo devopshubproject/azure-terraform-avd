@@ -21,3 +21,10 @@ sku = "20h2-evd-o365pp"
 os_type = "Standard_F2"
 username = ""
 password = ""
+
+# AAD details
+
+domain_name = ""
+ou_path = ""
+domain_user_upn = ""
+domain_password = ""
