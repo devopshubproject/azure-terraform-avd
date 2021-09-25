@@ -78,11 +78,6 @@ variable "sig_image_name" {
   description = "Image definition name"
 }
 
-variable "os_type" {
-  type        = string
-  description = "Type of OS"
-}
-
 variable "publisher" {
   type        = string
   description = "Name of the OS publisher"
